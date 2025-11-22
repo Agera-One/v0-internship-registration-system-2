@@ -22,52 +22,53 @@ export function Sidebar() {
       {/* Sidebar */}
       <aside
         className={cn(
-          "fixed left-0 top-0 h-screen w-64 bg-sidebar text-sidebar-foreground border-r border-sidebar-border transition-transform duration-300 z-50",
+          "fixed left-0 top-0 h-screen w-64 bg-sidebar text-sidebar-foreground border-r border-sidebar-border transition-transform duration-300 z-50 flex flex-col",
           isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0",
         )}
       >
-        <div className="flex flex-col h-full">
-          {/* Header */}
-          <div className="p-6 border-b border-sidebar-border">
+        <div className="p-6 border-b border-sidebar-border bg-gradient-to-r from-sidebar to-sidebar/80">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-10 h-10 bg-gradient-to-br from-sidebar-primary to-accent rounded-lg flex items-center justify-center text-sidebar-primary-foreground font-bold text-sm">
+              IH
+            </div>
             <h1 className="text-xl font-bold text-sidebar-primary">InternHub</h1>
-            <p className="text-sm text-sidebar-foreground/60 mt-1">Vocational Internships</p>
           </div>
+          <p className="text-xs text-sidebar-foreground/60 ml-13 font-medium">Vocational Internships</p>
+        </div>
 
-          {/* Navigation */}
-          <nav className="flex-1 overflow-y-auto py-6">
-            {links.map((link) => {
-              const Icon = link.icon
-              const isActive = pathname === link.href
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={cn(
-                    "flex items-center gap-3 px-6 py-3 mx-2 rounded-lg transition-colors",
-                    isActive
-                      ? "bg-sidebar-primary text-sidebar-primary-foreground"
-                      : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
-                  )}
-                  onClick={() => setIsOpen(false)}
-                >
-                  <Icon size={20} />
-                  <span className="font-medium">{link.label}</span>
-                </Link>
-              )
-            })}
-          </nav>
+        {/* Navigation */}
+        <nav className="flex-1 overflow-y-auto py-6 px-4">
+          {links.map((link) => {
+            const Icon = link.icon
+            const isActive = pathname === link.href
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={cn(
+                  "flex items-center gap-3 px-4 py-3 rounded-lg transition-all font-medium mb-2",
+                  isActive
+                    ? "bg-sidebar-primary text-sidebar-primary-foreground shadow-md"
+                    : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+                )}
+                onClick={() => setIsOpen(false)}
+              >
+                <Icon size={20} />
+                <span>{link.label}</span>
+              </Link>
+            )
+          })}
+        </nav>
 
-          {/* Footer */}
-          <div className="p-6 border-t border-sidebar-border">
-            <p className="text-xs text-sidebar-foreground/60">© 2025 InternHub. All rights reserved.</p>
-          </div>
+        <div className="p-6 border-t border-sidebar-border bg-sidebar/50">
+          <p className="text-xs text-sidebar-foreground/60 font-medium">© 2025 InternHub</p>
         </div>
       </aside>
 
       {/* Mobile Menu Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed md:hidden bottom-6 right-6 p-3 bg-sidebar-primary text-sidebar-primary-foreground rounded-full shadow-lg z-40"
+        className="fixed md:hidden bottom-6 right-6 p-3 bg-sidebar-primary text-sidebar-primary-foreground rounded-full shadow-lg z-40 hover:shadow-xl transition-shadow active:scale-95"
       >
         {isOpen ? <X size={24} /> : <Menu size={24} />}
       </button>
